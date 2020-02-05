@@ -1,0 +1,35 @@
+type BreakDown {
+  id: ID! @id
+  number: Int
+  code: String!
+  brakeDate: DateTime
+  repairDate: DateTime
+  shop: String
+  modelId : String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Shop {
+  id: ID! @id
+  name: String!
+  location: String!
+}
+
+
+type User {
+  id: ID! @id
+  email: String! @unique
+  name: String
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  published: Boolean! @default(value: false)
+  title: String!
+  content: String
+  author: User!
+}
