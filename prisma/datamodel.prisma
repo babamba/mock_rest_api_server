@@ -6,6 +6,30 @@ type BreakDown {
   repairDate: DateTime
   shop: String
   modelId : String
+  timeline : [BreakdownTimeLine] @relation(name: "BreakDownTimeLine")
+  lat:String
+  lng:String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+type BreakdownTimeLine {
+  id: ID! @id
+  BreakDown: BreakDown! @relation(name: "BreakDownTimeLine")
+  lat:String!
+  lng: String!
+  code: String!
+  codeText: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type BreakdownReport {
+  id: ID! @id
+  number: Int
+  code: String!
+  brakeDate: DateTime
+  repairDate: DateTime
+  modelId : String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

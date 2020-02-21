@@ -41,6 +41,14 @@ app.delete(`/post/:id`, async (req, res) => {
   res.json(post);
 });
 
+app.get(`/break-timeline`, async (req, res) => {
+  const { breakDownID } = req.query;
+  console.log('request id : ', breakDownID);
+  const result = await prisma.breakdownTimeLines({ where: { BreakDown: { id: breakDownID } } });
+  console.dir('result : ', result);
+  res.json(result);
+});
+
 app.get(`/breaken-list`, async (req, res) => {
   const { page } = req.query;
   const break_all = await prisma.breakDowns();
@@ -48,6 +56,7 @@ app.get(`/breaken-list`, async (req, res) => {
     first: 10,
     skip: page && page > 0 ? page * 10 - 10 : 0
   });
+
   const result = {
     result: break_list,
     total_count: break_all.length
