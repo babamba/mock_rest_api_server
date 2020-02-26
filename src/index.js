@@ -1,7 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { prisma } = require('./generated/prisma-client');
-var cors = require('cors');
+const express = require("express");
+const bodyParser = require("body-parser");
+const { prisma } = require("./generated/prisma-client");
+var cors = require("cors");
 
 const app = express();
 
@@ -26,7 +26,7 @@ app.post(`/post`, async (req, res) => {
   res.json(result);
 });
 
-app.put('/publish/:id', async (req, res) => {
+app.put("/publish/:id", async (req, res) => {
   const { id } = req.params;
   const post = await prisma.updatePost({
     where: { id },
@@ -43,14 +43,17 @@ app.delete(`/post/:id`, async (req, res) => {
 
 app.get(`/break-timeline`, async (req, res) => {
   const { breakDownID } = req.query;
-  console.log('request id : ', breakDownID);
-  const result = await prisma.breakdownTimeLines({ where: { BreakDown: { id: breakDownID } } });
-  console.dir('result : ', result);
+  console.log("request id : ", breakDownID);
+  const result = await prisma.breakdownTimeLines({
+    where: { BreakDown: { id: breakDownID } }
+  });
+  console.dir("result : ", result);
   res.json(result);
 });
 
 app.get(`/breaken-list`, async (req, res) => {
   const { page } = req.query;
+  console.log("page : ", page);
   const break_all = await prisma.breakDowns();
   const break_list = await prisma.breakDowns({
     first: 10,
@@ -90,12 +93,12 @@ app.get(`/post/:id`, async (req, res) => {
   res.json(post);
 });
 
-app.get('/feed', async (req, res) => {
+app.get("/feed", async (req, res) => {
   const posts = await prisma.posts({ where: { published: true } });
   res.json(posts);
 });
 
-app.get('/filterPosts', async (req, res) => {
+app.get("/filterPosts", async (req, res) => {
   const { searchString } = req.query;
   const draftPosts = await prisma.posts({
     where: {
@@ -112,4 +115,6 @@ app.get('/filterPosts', async (req, res) => {
   res.json(draftPosts);
 });
 
-app.listen(9100, () => console.log('Server is running on http://localhost:9100'));
+app.listen(9100, () =>
+  console.log("Server is running on http://localhost:9100")
+);
